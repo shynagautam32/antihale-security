@@ -1,106 +1,343 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AntiHale Security</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #05231a;
-        color: white;
-      }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AntiHale Security | Windows Antivirus Protection</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #041f17;
+      color: #f7fffb;
+    }
+    a { color: inherit; text-decoration: none; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 6vw;
+      background: #062d22;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
+    .brand { font-size: 22px; font-weight: 800; }
+    nav { display: flex; gap: 20px; }
+    nav a { color: #c9ded6; font-weight: 700; }
+    nav a:hover { color: white; }
+    section { padding: 80px 6vw; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      min-height: 720px;
+    }
+    .eyebrow {
+      color: #a7f3d0;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    h1 {
+      font-size: 76px;
+      line-height: .98;
+      margin: 12px 0 24px;
+    }
+    h2 { font-size: 44px; margin: 0 0 16px; }
+    h3 { font-size: 23px; margin: 0 0 10px; }
+    p {
+      color: #c9ded6;
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .button {
+      display: inline-block;
+      margin: 10px 10px 0 0;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .primary { background: #34d399; color: #0d241c; }
+    .secondary { background: rgba(255,255,255,.08); color: white; }
+    .dashboard {
+      background: #082b21;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    }
+    .bar { background: #0b3a2d; padding: 14px; }
+    .app {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      min-height: 420px;
+    }
+    aside {
+      background: #0b3a2d;
+      padding: 20px;
+      border-right: 1px solid rgba(255,255,255,.14);
+    }
+    .side { display: block; padding: 12px; margin: 10px 0; border-radius: 8px; background: #10533f; }
+    .side.active { background: #34d399; color: #0d241c; font-weight: 800; }
+    .app main { padding: 22px; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .metric, .status, .card, .price, details {
+      background: #0b3f30;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      padding: 22px;
+    }
+    .metric span { color: #c9ded6; font-size: 13px; }
+    .metric strong { display: block; font-size: 30px; margin-top: 6px; }
+    .table {
+      margin-top: 16px;
+      background: white;
+      color: #0d241c;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: .8fr 1.5fr 1fr;
+      gap: 12px;
+      padding: 13px;
+    }
+    .row.head { background: #dff5ec; font-weight: 800; }
+    .danger { color: #d92d50; font-weight: 800; }
+    .band { background: #062d22; border-top: 1px solid rgba(255,255,255,.14); border-bottom: 1px solid rgba(255,255,255,.14); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 18px;
+      margin-top: 30px;
+    }
+    .steps, .pricing, .split {
+      display: grid;
+      gap: 18px;
+      margin-top: 30px;
+    }
+    .steps { grid-template-columns: repeat(4,1fr); }
+    .pricing { grid-template-columns: repeat(3,1fr); }
+    .split { grid-template-columns: 1fr 1fr; }
+    .price.featured { border-color: #34d399; }
+    .amount { font-size: 42px; font-weight: 900; margin: 16px 0; }
+    input, select, textarea {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: #082b21;
+      color: white;
+      font: inherit;
+    }
+    textarea { min-height: 130px; }
+    details { margin-bottom: 12px; }
+    summary { font-weight: 800; cursor: pointer; font-size: 18px; }
+    footer {
+      padding: 28px 6vw;
+      border-top: 1px solid rgba(255,255,255,.14);
+      color: #c9ded6;
+    }
+    @media (max-width: 900px) {
+      nav { display: none; }
+      .hero, .split { grid-template-columns: 1fr; }
+      .grid, .steps, .pricing, .metrics { grid-template-columns: 1fr; }
+      h1 { font-size: 52px; }
+      .app { grid-template-columns: 1fr; }
+      aside { display: none; }
+    }
+  </style>
+</head>
 
-      header {
-        padding: 24px 48px;
-        background: #0b3a2d;
-        font-size: 24px;
-        font-weight: bold;
-      }
+<body>
+  <header>
+    <div class="brand">AntiHale Security</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Prices</a>
+      <a href="#register">Register</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-      main {
-        padding: 70px 48px;
-        max-width: 960px;
-      }
-
-      h1 {
-        font-size: 56px;
-        margin: 0 0 16px;
-      }
-
-      h2 {
-        margin-top: 0;
-      }
-
-      p {
-        font-size: 20px;
-        line-height: 1.6;
-        color: #c9ded6;
-      }
-
-      .button {
-        display: inline-block;
-        margin-top: 24px;
-        padding: 14px 20px;
-        background: #34d399;
-        color: #05231a;
-        font-weight: bold;
-        text-decoration: none;
-        border-radius: 8px;
-      }
-
-      section {
-        margin-top: 48px;
-        padding: 24px;
-        background: #0b3a2d;
-        border-radius: 8px;
-      }
-
-      .note {
-        border-left: 5px solid #34d399;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>AntiHale Security</header>
-
-    <main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Windows antivirus protection</div>
       <h1>AntiHale Antivirus</h1>
-
       <p>
-        AntiHale Antivirus is a lightweight Windows security app with
-        Microsoft Defender-powered scanning, local suspicious-file detection,
-        and automatic quarantine.
+        A professional Windows security app with Microsoft Defender-powered scanning,
+        suspicious-file detection, automatic quarantine, and a clean dark green dashboard.
       </p>
+      <a class="button primary" href="#download">Windows Download</a>
+      <a class="button secondary" href="#register">Register Interest</a>
+    </div>
 
-      <a class="button" href="#">Windows download coming soon</a>
+    <div class="dashboard">
+      <div class="bar">AntiHale Antivirus Dashboard</div>
+      <div class="app">
+        <aside>
+          <strong>AntiHale</strong>
+          <span class="side active">Quick Scan</span>
+          <span class="side">Full Scan</span>
+          <span class="side">Scan Folder</span>
+          <span class="side">Remove Threats</span>
+        </aside>
+        <main>
+          <h3>Protection Dashboard</h3>
+          <div class="metrics">
+            <div class="metric"><span>Files scanned</span><strong>731</strong></div>
+            <div class="metric"><span>Findings</span><strong>1</strong></div>
+            <div class="metric"><span>Quarantined</span><strong>1</strong></div>
+          </div>
+          <div class="status">
+            <strong>Scan complete with detections</strong>
+            <p>1 high-risk item was quarantined automatically.</p>
+          </div>
+          <div class="table">
+            <div class="row head"><span>Severity</span><span>Threat</span><span>Action</span></div>
+            <div class="row"><span class="danger">Critical</span><span>Ransomware behavior</span><span>Quarantined</span></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
 
-      <section>
-        <h2>Features</h2>
+  <section id="features" class="band">
+    <div class="eyebrow">Product features</div>
+    <h2>Protection tools for Windows computers</h2>
+    <div class="grid">
+      <div class="card"><h3>Quick Scan</h3><p>Scan common risky areas like Downloads, Desktop, and Documents.</p></div>
+      <div class="card"><h3>Full Scan</h3><p>Run deeper scans using supported Microsoft Defender tools.</p></div>
+      <div class="card"><h3>Folder Scan</h3><p>Select a folder and check suspicious files before opening them.</p></div>
+      <div class="card"><h3>Quarantine</h3><p>High-confidence threats are isolated for safer review.</p></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="eyebrow">How it works</div>
+    <h2>Simple protection flow</h2>
+    <div class="steps">
+      <div class="card"><h3>1. Install</h3><p>Download AntiHale Antivirus on a Windows computer.</p></div>
+      <div class="card"><h3>2. Scan</h3><p>Choose quick scan, full scan, or scan folder.</p></div>
+      <div class="card"><h3>3. Review</h3><p>See severity, threat name, action, and file path.</p></div>
+      <div class="card"><h3>4. Clean</h3><p>Use quarantine and Defender-powered removal tools.</p></div>
+    </div>
+  </section>
+
+  <section id="pricing" class="band">
+    <div class="eyebrow">Prices</div>
+    <h2>Choose your plan</h2>
+    <div class="pricing">
+      <div class="price">
+        <h3>Free</h3>
+        <div class="amount">$0</div>
+        <p>For personal testing.</p>
+        <p>Quick scan, folder scan, basic quarantine.</p>
+      </div>
+      <div class="price featured">
+        <h3>Pro</h3>
+        <div class="amount">$4.99/mo</div>
+        <p>For full protection tools.</p>
+        <p>Full scan, Defender cleanup, quarantine history.</p>
+      </div>
+      <div class="price">
+        <h3>Family</h3>
+        <div class="amount">$9.99/mo</div>
+        <p>For multiple home computers.</p>
+        <p>Up to 5 devices, priority updates, email support.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="split">
+      <div>
+        <div class="eyebrow">Download</div>
+        <h2>Windows app download</h2>
         <p>
-          Quick scan, full scan, folder scan, Microsoft Defender threat removal,
-          suspicious file detection, and quarantine tools.
+          Download the Windows app from the official GitHub Releases page.
         </p>
-      </section>
-
-      <section>
-        <h2>Professional Protection Dashboard</h2>
+        <a class="button primary" href="https://github.com/shynagautam32/antihale-security/releases">
+          Download Windows App
+        </a>
+      </div>
+      <div class="card">
+        <h3>Before public release</h3>
         <p>
-          AntiHale uses a clean dark green and white interface designed for
-          simple scanning, clear detection results, and easy threat review.
+          The Windows app should be tested and code-signed before wide public distribution.
         </p>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section class="note">
-        <h2>Important Security Note</h2>
-        <p>
-          No antivirus can guarantee perfect detection of every possible virus,
-          ransomware, trojan, or future malware family. AntiHale is designed as
-          a practical Windows protection layer.
-        </p>
-      </section>
-    </main>
-  </body>
+  <section id="register" class="band">
+    <div class="split">
+      <div>
+        <div class="eyebrow">Register</div>
+        <h2>Register interest</h2>
+        <p>Use this form as a preview. Connect it later to Google Forms, Formspree, or your own backend.</p>
+      </div>
+      <form>
+        <input type="text" placeholder="Full name">
+        <input type="email" placeholder="Email address">
+        <select>
+          <option>Interested in Free</option>
+          <option>Interested in Pro</option>
+          <option>Interested in Family</option>
+        </select>
+        <button class="button primary" type="button">Submit interest</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="split">
+      <div>
+        <div class="eyebrow">Contact us</div>
+        <h2>Questions about AntiHale?</h2>
+        <p>Email: support@antihale-security.example</p>
+        <p>Business hours: Monday to Friday, 9 AM to 5 PM</p>
+      </div>
+      <form>
+        <input type="text" placeholder="Your name">
+        <input type="email" placeholder="Your email">
+        <textarea placeholder="How can we help?"></textarea>
+        <button class="button primary" type="button">Send message</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="eyebrow">FAQ</div>
+    <h2>Common questions</h2>
+    <details>
+      <summary>Can the website scan my computer?</summary>
+      <p>No. Scanning and removal must happen inside the installed Windows app.</p>
+    </details>
+    <details>
+      <summary>Does AntiHale remove every virus?</summary>
+      <p>No antivirus can honestly guarantee perfect detection of every possible current and future threat.</p>
+    </details>
+    <details>
+      <summary>Does it use Microsoft Defender?</summary>
+      <p>Yes. The app is designed to use Microsoft Defender commands where available.</p>
+    </details>
+  </section>
+
+  <footer>
+    AntiHale Security | Windows antivirus protection website
+  </footer>
+</body>
 </html>
